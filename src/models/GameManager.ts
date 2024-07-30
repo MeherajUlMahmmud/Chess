@@ -2,8 +2,6 @@ import { WebSocket } from "ws";
 import { INIT_GAME, MOVE } from "./messages";
 import { Game } from "./Game";
 
-// User, Game
-
 export class GameManager {
 	private games: Game[];
 	private pendingUser: WebSocket | null;
@@ -39,6 +37,8 @@ export class GameManager {
 				}
 			}
 
+			console.log("Message", message);
+
 			if (message.type === MOVE) {
 				console.log("inside move");
 				const game = this.games.find(
@@ -46,7 +46,7 @@ export class GameManager {
 				);
 				if (game) {
 					console.log("inside make move");
-					game.makeMove(socket, message.payload.move);
+					game.makeMove(socket, message.move);
 				}
 			}
 		});
