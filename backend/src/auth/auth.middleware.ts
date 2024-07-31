@@ -9,7 +9,12 @@ export const authenticateJWT = (
 ) => {
 	const token = req.header("Authorization")?.split(" ")[1];
 	if (!token) {
-		return res.status(401).json({ error: "Access denied, token missing" });
+		return res
+			.status(401)
+			.json({
+				message: "Access denied, token missing",
+				status: "FAILED",
+			});
 	}
 
 	try {
@@ -17,6 +22,9 @@ export const authenticateJWT = (
 		req.user = verified;
 		next();
 	} catch (error) {
-		res.status(401).json({ error: "Invalid token" });
+		res.status(401).json({
+			message: "Invalid token",
+			status: "FAILED",
+		});
 	}
 };
